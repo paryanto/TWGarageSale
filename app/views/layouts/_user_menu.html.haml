@@ -1,0 +1,23 @@
+%ul{:class => "nav pull-right"}
+  %li.divider-vertical
+  %li.dropdown
+    %a{:href => "#", :id => 'user_menu', :class => "dropdown-toggle", "data-toggle" => "dropdown"}
+      %span{:class=>"label label-inverse loginStatus"}
+        %i{:class => "icon-user icon-white"}
+        Logged in as:
+        %span{:style => "color:#FFD406"}
+          = current_user.username
+        - if current_user.admin?
+          %span{:class => "loginStatus"} [ ADMIN ]
+        %b.caret
+    %ul{:class => "dropdown-menu"}
+      - if test_mode?
+        - if not(current_user.admin?)
+          %li=link_to("My Auctions", user_path(current_user))
+        %li=link_to("Logout", destroy_user_session_path)
+        - if session[:cas_login]
+          %li=link_to("Logout from CAS", destroy_cas_user_session_path)
+      - else
+        - if not(current_user.admin?)
+          %li=link_to("My Auctions", user_path(current_user))
+        %li=link_to("Logout", destroy_cas_user_session_path)

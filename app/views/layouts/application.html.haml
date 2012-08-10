@@ -1,0 +1,34 @@
+!!! 5
+%html
+%head
+  %title
+    = "Garage Sale | #{@title}"
+  = favicon_link_tag '/assets/favicon_b.png'
+  = stylesheet_link_tag    "application", :media => "all"
+  = javascript_include_tag "application"
+  = csrf_meta_tags
+
+%body
+  %div{:class => 'navbar navbar-fixed-top'}
+    .navbar-inner
+      .container
+        - if user_signed_in?
+          // btn-navbar is used as the toggle for collapsed navbar content
+          %a{ :class =>"btn btn-navbar", 'data-toggle' => 'collapse', 'data-target' => '.nav-collapse'}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+
+          %a(title='TWGS Home'){:href => "/", :class => 'brand'} Garage Sale
+
+          .nav-collapse
+            = render :partial => 'layouts/site_navigation'
+            = render :partial => 'layouts/user_menu'
+        - else
+          %a{:class => "brand"} &nbsp;
+  .container
+    - flash.each do |name, msg|
+      %div{:class => "alert alert-#{ (name == :success || name == :notice) ? 'success' : 'error' }"}
+        %a.close{"data-dismiss" => "alert"} x
+        = msg
+    = yield

@@ -1,0 +1,7 @@
+= simple_format("Your bid: <b>#{number_to_currency(bid.amount)}</b><span class='success'></span>")
+= link_to "Withdraw Bid", withdraw_bid_path(bid),
+      :method => 'put',
+      :confirm => "You won't be able to bid on this auction again after withdrawing. Continue?",
+      :class => "btn btn-danger btn-mini withdraw_bid",
+      :remote => true,
+      :disable_with => "Submitting..."

@@ -1,0 +1,16 @@
+%h1
+  %span Closed Auctions
+
+%h3= (page_entries_info @closed_auctions).sub("silent", "closed").html_safe
+- if @closed_auctions.empty?
+  .empty_collection
+    %p.emptyMsg There are no closed auctions.
+- else
+  %table{:class => 'table table-simpleBordered', :id => 'closedAuctions'}
+    %tbody
+      - @closed_auctions.each do |auction|
+        = render :partial => "close_auction", :locals => { :auction => auction }
+  %div{:class => 'index_footer clearfix'}
+    = paginate @closed_auctions
+    .pagination_info
+      = (page_entries_info @closed_auctions).sub("silent", "closed").html_safe

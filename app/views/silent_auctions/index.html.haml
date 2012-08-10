@@ -1,0 +1,16 @@
+%h1
+  %span Running Auctions
+  - if current_user.admin?
+    = link_to 'Create NEW Auction', new_silent_auction_path, :class => 'btn btn-primary'
+
+- if @running_auctions.empty?
+  %h3= "No auctions found"
+  .empty_collection
+    %p.emptyMsg There are no running auctions.
+- else
+  %h3= "Displaying all #{pluralize(@running_auctions.count, "running auctions")}"
+  %table{:class => 'table table-simpleBordered', :id => 'runningAuctions'}
+    %tbody
+      - @running_auctions.each do |auction|
+        = render :partial => "running_auction", :locals => { :auction => auction }
+
